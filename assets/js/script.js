@@ -1,43 +1,60 @@
 //display the current date 
 
+
+
+
+
 var today = moment().format("dddd, MMM Do YYYY");
 $("#currentDay").html(today); 
 
 
 // depending on the time, this function will provide each slot with a different color(grey,red,green).
-function colorAttribute(){ 
+
+$(document).ready(function(){
 
 
 
+function colorTextField(){ 
 
-  //this variable will hold the current hour   
-var currentTime = moment().hours();
-
-
-//this for each loop will loop through the div elements and check to see if it matches the currentTime
+    var currentTime = moment().hours();
 $(".time-block").each(function(){
+    var timeEl = parseInt($(".time-block").attr("id"));
 
+    if (currentTime === timeEl){ 
+        $(this).addClass("present");
 
-// in order to compare the time within our div id and the moment function, we need to convert the string to an integer.
-    var timeEl = parseInt ($(".time-block").attribute("id"));
+       }else if (currentTime > timeEl){
+        $(this).addClass("past");
 
-    if (currentTime < timeEl){ 
-        $(".time-block").addClass("future");
-    }else if ( currentTime > timeEl) {
-        $(".time-block").addClass ("past");
-
-    }else{
-        $(".time-block").addClass("present");
-        
+    }else {
+        $(this).addClass("future");
     }
-
-
-
-
-
-})
+});
 
 }
+
+colorTextField();
+
+//saves the data into local storage
+
+$(".saveBtn").on("click",function(){
+//creates a variable that will hold the value of the id
+var time = $(this).parent().attr("id");
+
+//creare a variable that will hold the value of the textfield
+var textField = $(this).siblings(".description").val();
+
+//save the data into localstorage
+localStorage.setItem(time,textField);
+
+});
+
+});
+
+
+ 
+
+    
 
 
 
