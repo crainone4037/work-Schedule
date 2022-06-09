@@ -10,32 +10,50 @@ $("#currentDay").html(today);
 
 // depending on the time, this function will provide each slot with a different color(grey,red,green).
 
+
+//the .ready function basically makes sure that this code will run after everything has loaded. 
 $(document).ready(function(){
 
 
 
-function colorTextField(){ 
+function workSchedule(){ 
 
     var currentTime = moment().hours();
 $(".time-block").each(function(){
     var timeEl = parseInt($(".time-block").attr("id"));
 
     if (currentTime === timeEl){ 
-        $(this).addClass("present");
+        $(".description").addClass("present");
+        $(".description").removeClass("past");
+        $(".description").removeClass("future");
+
+
 
        }else if (currentTime > timeEl){
-        $(this).addClass("past");
+        $(".description").addClass("past");
+        $(".description").removeClass("present");
+        $(".description").removeClass("future");
 
-    }else {
-        $(this).addClass("future");
+
+
+    }else if (currentTime < timeEl) {
+        $(".description").addClass("future");
+        $(".description").removeClass("past");
+        $(".description").removeClass("present");
+
     }
 });
 
 }
+workSchedule();
+})
 
-colorTextField();
 
 //saves the data into local storage
+
+function saveStorage(){
+
+
 
 $(".saveBtn").on("click",function(){
 //creates a variable that will hold the value of the id
@@ -49,7 +67,15 @@ localStorage.setItem(time,textField);
 
 });
 
-});
+};
+
+saveStorage();
+
+
+
+
+
+
 
 
  
